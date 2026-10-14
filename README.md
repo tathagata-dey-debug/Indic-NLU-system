@@ -51,7 +51,7 @@ flowchart TB
 - **Indic-BERT Diacritic Preservation**: Initialized with `keep_accents=True` to preserve vital Indic orthographic markers, vowel signs (*matras*), nuktas, and viramas/halants.
 - **System-Level UTF-8 & Windows Console Protection**: Automatic standard I/O stream reconfiguration (`sys.stdin.reconfigure`, `os.system("chcp 65001")`) preventing character mojibake and encoding crashes on Windows and Linux terminals.
 - **Unicode NFC Normalization**: Normalizes all input strings to canonical composition (`NFC`), stripping invisible zero-width spaces (`\u200b`) and Byte Order Marks (`\ufeff`).
-- **Composite Multi-Task Loss**: Joint optimization with $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{sentiment}} + \mathcal{L}_{\text{intent}}$ using `AdamW` (`lr=2e-5`, `weight_decay=0.01`) and gradient clipping (`max_norm=1.0`).
+- **Composite Multi-Task Loss**: Joint optimization with $\mathcal{L}\_{\text{total}} = \mathcal{L}\_{\text{sentiment}} + \mathcal{L}\_{\text{intent}}$ using `AdamW` (`lr=2e-5`, `weight_decay=0.01`) and gradient clipping (`max_norm=1.0`).
 - **Multi-Modal Testing Interface**:
   - **Mode A (Numbered Menu)**: Pre-configured test cases across Hindi and Bengali selectable by number keys.
   - **Mode B (File Reader)**: Batch inference from UTF-8 text files (`--file <path>`).
