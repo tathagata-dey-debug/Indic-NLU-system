@@ -10,6 +10,7 @@ The model jointly solves two core NLU tasks using a shared Transformer encoder a
 
 ## Architecture Overview
 
+```mermaid
 flowchart TB
     A["Input Sequence<br/>(input_ids, mask)"]
     B["ai4bharat/indic-bert Encoder<br/>(~33.44M params, 12 ALBERT layers)"]
@@ -41,7 +42,7 @@ flowchart TB
     class H outputIntent
 
     linkStyle default stroke:#64748B,stroke-width:1.5px
-
+```
 
 ---
 
