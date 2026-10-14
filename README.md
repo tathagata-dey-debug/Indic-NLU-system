@@ -10,37 +10,38 @@ The model jointly solves two core NLU tasks using a shared Transformer encoder a
 
 ## Architecture Overview
 
-```
-                      ┌───────────────────────────────────────┐
-                      │  Input Sequence (input_ids, mask)     │
-                      └──────────────────┬────────────────────┘
-                                         ▼
-                      ┌───────────────────────────────────────┐
-                      │    ai4bharat/indic-bert Encoder       │
-                      │ (~33.44M params, 12 ALBERT layers)    │
-                      └──────────────────┬────────────────────┘
-                                         ▼
-                      ┌───────────────────────────────────────┐
-                      │   [CLS] Token Extraction (Index 0)    │
-                      │         Shape: [batch_size, 768]      │
-                      └──────────────────┬────────────────────┘
-                                         ▼
-                      ┌───────────────────────────────────────┐
-                      │         Dropout (p = 0.2)             │
-                      └──────────────┬────────────────┬───────┘
-                                     │                │
-            ┌────────────────────────┴─┐            ┌─┴────────────────────────┐
-            ▼                          ▼            ▼                          ▼
-┌─────────────────────────┐          ┌─────────────────────────┐
-│     sentiment_head      │          │       intent_head       │
-│  nn.Linear(768, 3)      │          │   nn.Linear(768, 3)     │
-└───────────┬─────────────┘          └───────────┬─────────────┘
-            ▼                                    ▼
-┌─────────────────────────┐          ┌─────────────────────────┐
-│       sent_logits       │          │      intent_logits      │
-│  Shape: [batch_size, 3] │          │  Shape: [batch_size, 3] │
-└─────────────────────────┘          └─────────────────────────┘
-```
+flowchart TB
+    A["Input Sequence<br/>(input_ids, mask)"]
+    B["ai4bharat/indic-bert Encoder<br/>(~33.44M params, 12 ALBERT layers)"]
+    C["[CLS] Token Extraction (Index 0)<br/>Shape: [batch_size, 768]"]
+    D["Dropout (p = 0.2)"]
+
+    A --> B --> C --> D
+
+    D --> E["sentiment_head<br/>nn.Linear(768, 3)"]
+    D --> F["intent_head<br/>nn.Linear(768, 3)"]
+
+    E --> G["sent_logits<br/>Shape: [batch_size, 3]"]
+    F --> H["intent_logits<br/>Shape: [batch_size, 3]"]
+
+    classDef input fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E,stroke-width:1.5px
+    classDef encoder fill:#DBEAFE,stroke:#2563EB,color:#1E3A8A,stroke-width:2px
+    classDef shared fill:#F3E8FF,stroke:#9333EA,color:#581C87,stroke-width:1.5px
+    classDef sentiment fill:#D1FAE5,stroke:#059669,color:#064E3B,stroke-width:1.5px
+    classDef intent fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:1.5px
+    classDef outputSent fill:#ECFDF5,stroke:#10B981,color:#065F46,stroke-width:1.5px
+    classDef outputIntent fill:#FFFBEB,stroke:#F59E0B,color:#92400E,stroke-width:1.5px
+
+    class A input
+    class B encoder
+    class C,D shared
+    class E sentiment
+    class F intent
+    class G outputSent
+    class H outputIntent
+
+    linkStyle default stroke:#64748B,stroke-width:1.5px
+
 
 ---
 
